@@ -3,6 +3,7 @@ import BlogList from "./BlogList";
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [name, setName] = useState("Uzair");
 
@@ -13,11 +14,13 @@ const Home = () => {
       })
       .then((data) => {
         setBlogs(data);
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <div className="home">
+      {isLoading && <div>Loading....</div>}
       {blogs && <BlogList blogs={blogs} title="All Blogs!" />}
 
       <button onClick={() => setName("Zubair")}>Change name</button>
