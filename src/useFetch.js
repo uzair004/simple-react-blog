@@ -6,7 +6,9 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/blogs")
+    const abortCont = new AbortController();
+
+    fetch("http://localhost:8000/blogs", { signal: abortCont.signal })
       .then((res) => {
         if (!res.ok) {
           throw Error("Fetching resources failed!");
@@ -18,9 +20,17 @@ const useFetch = (url) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
-        setIsLoading(false);
+        if (err.name === "AbortError") {
+          console.log("fetch aborted");
+        } else {
+          setError(err.message);
+          setIsLoading(false);
+        }
       });
+
+    return () => {
+      abortCont.abort();
+    };
   }, [url]);
 
   return { data, isLoading, error };
