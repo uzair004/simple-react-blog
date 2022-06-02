@@ -8,7 +8,7 @@ const useFetch = (url) => {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch("http://localhost:8000/blogs", { signal: abortCont.signal })
+    fetch(url, { signal: abortCont.signal })
       .then((res) => {
         if (!res.ok) {
           throw Error("Fetching resources failed!");
