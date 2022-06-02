@@ -10,7 +10,6 @@ const BlogList = ({ blogs, title }) => {
             <h2>{blog.title}</h2>
             <p>author: {blog.author}</p>
           </Link>
-          <button>Delete</button>
         </div>
       ))}
     </div>
